@@ -5,13 +5,16 @@ import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useRegisterModal from "@/app/hooks/useRegisterModel";
+import Modal from "./Modal";
+
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
-    formState: { error },
+    formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
       name: "",
@@ -19,23 +22,39 @@ const RegisterModal = () => {
       password: "",
     },
   });
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setIsLoading(true);
 
-    axios
-      .post("/api/register", data)
-      .then(() => {
-        registerModal.onClose();
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    (data) => {
+      setIsLoading(true);
 
-  return <div></div>;
+      axios
+        .post("/api/register", data)
+        .then(() => {
+          registerModal.onClose();
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    },
+    [registerModal]
+  );
+
+  const bodyContent = <div className="flex flex-col gap-4">{/* Add your form content here */}</div>;
+
+  return (
+    <Modal
+      disabled={isLoading}
+      isOpen={registerModal.isOpen}
+      title="Register"
+      actionLabel="Continue"
+      onClose={registerModal.onClose}
+      onSubmit={handleSubmit(onSubmit)}
+      body={bodyContent}
+    />
+  );
 };
 
 export default RegisterModal;

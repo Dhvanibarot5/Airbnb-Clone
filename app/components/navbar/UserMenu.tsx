@@ -56,11 +56,11 @@ const UserMenu = () => {
                     ">
                         <>
                             <MenuItem
-                                onclick={() => { }}
+                                onClick={() => { }}
                                 lable="Login"
                             />
                             <MenuItem
-                                onclick={() => { }}
+                                onClick={() => { }}
                                 lable="Sign up"
                             />
                         </>
