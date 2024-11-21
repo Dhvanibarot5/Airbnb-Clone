@@ -23,7 +23,7 @@ const Search = () => {
                     text-sm 
                     font-semibold
                      px-6">
-                    Anywhare
+                    Anywhere
                 </div>
                 <div className="
                     hidden
