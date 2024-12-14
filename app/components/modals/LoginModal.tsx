@@ -4,9 +4,9 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import userRegiserModal from "@/app/hooks/useRegisterModal";
+import useRegisterModal from "@/app/hooks/useRegisterModal"; // Correct import
+import useLoginModal from "@/app/hooks/useLoginModal"; // Correct import
 import Modal from "./Modal";
-import useLoginModal from "@/app/hooks/useRegisterModal";
 import Heading from "../Heading";
 import Input from "../inputs/Inputs";
 import toast from "react-hot-toast";
@@ -15,9 +15,9 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const LoginModal = () => {
-  const registerModal = userRegiserModal();
+  const registerModal = useRegisterModal();
+  const loginModal = useLoginModal(); // Use correct hook
   const router = useRouter();
-  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -41,7 +41,7 @@ const LoginModal = () => {
       if (callback?.ok) {
         toast.success("Logged in successfully");
         router.refresh();
-        loginModal.onClose();
+        loginModal.onClose(); // Close login modal
       }
       if (callback?.error) {
         toast.error(callback.error);
@@ -62,7 +62,7 @@ const LoginModal = () => {
     <div className="flex flex-col gap-4 mt-3">
       <hr />
       <Button outline label="Continue with Google" icon={FcGoogle} onClick={() => {}} />
-      <Button outline label="Continue with Google" icon={AiFillGithub} onClick={() => {}} />
+      <Button outline label="Continue with Github" icon={AiFillGithub} onClick={() => {}} />
       <div className=" justify-content-center text-neutral-500 text-center mt-4 font-light">
         <div>
           <div>Already have an account?</div>
