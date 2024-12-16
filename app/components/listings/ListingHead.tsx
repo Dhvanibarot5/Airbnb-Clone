@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import useCountries from "@/app/hooks/useCountries";
@@ -14,38 +14,33 @@ interface ListingHeadProps {
   currentUser?: SafeUser | null;
 }
 
-const ListingHead: React.FC<ListingHeadProps> = ({
-  title,
-  locationValue,
-  imageSrc,
-  id,
-  currentUser
-}) => {
+const ListingHead: React.FC<ListingHeadProps> = ({ title, locationValue, imageSrc, id, currentUser }) => {
   const { getByValue } = useCountries();
   const location = getByValue(locationValue);
 
   // Format Cloudinary URL
-  const imageUrl = imageSrc?.startsWith('http') 
-    ? imageSrc 
+  // const imageUrl = imageSrc?.startsWith("http") ? imageSrc : process.env.CLOUDINARY_URL;
+
+  const imageUrl = imageSrc?.startsWith("http")
+    ? imageSrc
     : `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${imageSrc}`;
 
   if (!imageUrl) {
     return null;
   }
 
-  return ( 
+  return (
     <>
-      <Heading
-        title={title}
-        subtitle={`${location?.region}, ${location?.label}`}
-      />
-      <div className="
+      <Heading title={title} subtitle={`${location?.region}, ${location?.label}`} />
+      <div
+        className="
         w-full
         h-[60vh]
         overflow-hidden 
         rounded-xl
         relative
-      ">
+      "
+      >
         <Image
           src={imageUrl}
           fill
@@ -54,19 +49,18 @@ const ListingHead: React.FC<ListingHeadProps> = ({
           priority={true}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        <div className="
+        <div
+          className="
           absolute
           top-5
           right-5
-        ">
-          <HeartButton 
-            listingId={id}
-            currentUser={currentUser}
-          />
+        "
+        >
+          <HeartButton listingId={id} currentUser={currentUser} />
         </div>
       </div>
     </>
-   );
-}
- 
-export default ListingHead; 
+  );
+};
+
+export default ListingHead;
