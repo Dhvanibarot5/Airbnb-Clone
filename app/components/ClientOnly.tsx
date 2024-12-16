@@ -3,26 +3,26 @@
 import { useEffect, useState } from "react";
 
 interface ClientOnlyProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
-const ClientOnly: React.FC<ClientOnlyProps> = ({
-  children
-}) => {
-  const [hasMounted, setHasMounted] = useState(false);
+const ClientOnly: React.FC<ClientOnlyProps> = ({ children }) => {
 
-  useEffect(() => {
-    setHasMounted(true);
-  }, [])
-  if (!hasMounted) {
-    return null
-  }
+    const [hasmounted, setHasMounted] = useState(false);
 
-  return (
-    <>
-      {children}
-    </>
-  )
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
+
+    if (!hasmounted) {
+        return null;
+    }
+
+    return (
+        <>
+            {children}
+        </>
+    );
 }
 
-export default ClientOnly 
+export default ClientOnly;
